@@ -20,7 +20,7 @@ Use [Google Cloud Functions](https://cloud.google.com/functions) to analyze [Clo
 
 ## about
 
-This repository contains infrastructure-as-code to set up an automated, event-driven monitoring tool.  When a Dataproc Cluster is created within a specified project/region, a Cloud Function will be triggered that analyzes the configuration of every dataproc cluster in that specified project/region.  The Cloud Function will output a configuration of each cluster to [Google Cloud Storage](https://cloud.google.com/storage) as well as a spark recommendation report.  This report will suggest spark properties based on Google's Apache Spark best practices.
+This repository contains infrastructure-as-code to set up an automated, event-driven monitoring tool.  When a Dataproc Cluster is created within a specified project/region, a Cloud Function will be triggered that analyzes the configuration of every dataproc cluster in that specified project/region.  The Cloud Function will output a configuration of each cluster to [Google Cloud Storage](https://cloud.google.com/storage) as well as a spark recommendation report.  This report will recommend spark properties based on the dataproc cluster configuration (machine type, number of nodes) and Google's Apache Spark best practices.
 
 ----
 
