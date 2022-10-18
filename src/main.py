@@ -22,7 +22,7 @@ generate spark property recommendations for these clusters.
 import os
 import math
 import json
-import functionframework
+import functions_framework
 from google.cloud import dataproc_v1
 from google.cloud import storage
 from googleapiclient import discovery
@@ -81,8 +81,8 @@ def evaluate_properties(cluster):
   w_map = cluster.config.worker_config
   p_map = cluster.config.software_config.properties
 
-  m_type_index = len(w_map.m_type_uri.split('/'))-1
-  m_type_str = w_map.m_type_uri.split('/')[m_type_index]
+  m_type_index = len(w_map.machine_type_uri.split('/'))-1
+  m_type_str = w_map.machine_type_uri.split('/')[m_type_index]
   m_type_info = load_machine_type_info(m_type_str)[0]
 
   m_type = m_type_info['name']
@@ -241,8 +241,8 @@ def evaluate_dataproc_clusters():
       str(evaluate_properties(response))
     )
 
-@functionframework.cloud_event
-def execute():
+@functions_framework.cloud_event
+def execute(trigger):
   """
   Cloud Function entry point.
   """

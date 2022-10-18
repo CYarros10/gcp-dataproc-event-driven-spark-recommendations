@@ -33,7 +33,9 @@ while getopts ":i:n:r:z" opt; do
     esac
 done
 
-gcloud init
+echo "===================================================="
+echo " Setting up project ..."
+
 gcloud config set project $projectId
 
 gcloud services enable storage-component.googleapis.com 
@@ -50,13 +52,22 @@ gcloud services enable pubsub.googleapis.com
 gcloud services enable run.googleapis.com
 gcloud services enable eventarc.googleapis.com
 
+echo "===================================================="
+echo " Updating terraform variables ..."
+
 cd terraform
 
 # edit the variables.tf
+
 sed -i "s|%%PROJECT_ID%%|$projectId|g" variables.tf
 sed -i "s|%%PROJECT_NUMBER%%|$projectNumber|g" variables.tf
 sed -i "s|%%REGION%%|$region|g" variables.tf
 sed -i "s|%%ZONE%%|$zone|g" variables.tf
+
+cat variables.tf
+
+echo "===================================================="
+echo " Applying terraform ..."
 
 terraform init
 terraform plan

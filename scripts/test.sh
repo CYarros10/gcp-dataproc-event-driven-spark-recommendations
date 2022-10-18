@@ -20,7 +20,7 @@ usage() {
 }
 export -f usage
 
-while getopts ":i:n:r:z" opt; do
+while getopts ":i:r:c:" opt; do
     case $opt in
         i ) projectId="$OPTARG";;
         r ) region="$OPTARG";;
@@ -31,6 +31,9 @@ while getopts ":i:n:r:z" opt; do
         ;;
     esac
 done
+
+echo "===================================================="
+echo " Setting up project ..."
 
 gcloud config set project $projectId
 
@@ -52,6 +55,11 @@ echo "{
 }" > external_ip_policy.json
 
 gcloud resource-manager org-policies set-policy external_ip_policy.json --project=$projectId
+
+sleep 120
+
+echo "===================================================="
+echo " Creating cluster ..."
 
 gcloud dataproc clusters create $clusterName-sample \
     --region=$region
