@@ -1,13 +1,13 @@
 variable "project_id" {
-    default = ""
+    default = "%%PROJECT_ID%%"
 }
 
 variable "region" {
-    default = ""
+    default = "%%REGION%%"
 }
 
 variable "zone" {
-    default = ""
+    default = "%%ZONE%%"
 }
 
 variable "service_account_email" {

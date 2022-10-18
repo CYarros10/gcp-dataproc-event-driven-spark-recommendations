@@ -13,19 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Run in Cloud Shell to set up your project and deploy solution via terraform.
+# Run in Cloud Shell to deploy a sample dataproc cluster
 
 usage() {
-    echo "Usage: [ -i projectId ] [ -n projectNumber ] [ -r region ] [ -z zone ]"
+    echo "Usage: [ -i projectId ] [ -r region ] [ -c clusterName ]"
 }
 export -f usage
 
 while getopts ":i:n:r:z" opt; do
     case $opt in
         i ) projectId="$OPTARG";;
-        n ) projectNumber="$OPTARG";;
         r ) region="$OPTARG";;
-        z ) zone="$OPTARG";;
+        c ) clusterName="$OPTARG";;
         \?) echo "Invalid option -$OPTARG"
         usage
         exit 1
@@ -33,7 +32,6 @@ while getopts ":i:n:r:z" opt; do
     esac
 done
 
-gcloud init
 gcloud config set project $projectId
 
 gcloud services enable storage-component.googleapis.com 
@@ -42,22 +40,19 @@ gcloud services enable servicenetworking.googleapis.com
 gcloud services enable iam.googleapis.com 
 gcloud services enable dataproc.googleapis.com
 gcloud services enable cloudbilling.googleapis.com
-gcloud services enable artifactregistry.googleapis.com
-gcloud services enable cloudbuild.googleapis.com
-gcloud services enable cloudfunctions.googleapis.com
-gcloud services enable logging.googleapis.com
-gcloud services enable pubsub.googleapis.com
-gcloud services enable run.googleapis.com
-gcloud services enable eventarc.googleapis.com
 
-cd terraform
+echo "===================================================="
+echo " Setting external IP access ..."
 
-# edit the variables.tf
-sed -i "s|%%PROJECT_ID%%|$projectId|g" variables.tf
-sed -i "s|%%PROJECT_NUMBER%%|$projectNumber|g" variables.tf
-sed -i "s|%%REGION%%|$region|g" variables.tf
-sed -i "s|%%ZONE%%|$zone|g" variables.tf
+echo "{
+  \"constraint\": \"constraints/compute.vmExternalIpAccess\",
+	\"listPolicy\": {
+	    \"allValues\": \"ALLOW\"
+	  }
+}" > external_ip_policy.json
 
-terraform init
-terraform plan
-terraform apply
+gcloud resource-manager org-policies set-policy external_ip_policy.json --project=$projectId
+
+gcloud dataproc clusters create $clusterName-sample \
+    --region=$region
+
