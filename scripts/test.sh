@@ -33,6 +33,12 @@ while getopts ":i:r:c:" opt; do
 done
 
 echo "===================================================="
+echo " Inputs ..."
+echo " Project ID: ${projectId}" 
+echo " Region: ${region}" 
+echo " Cluster Name: ${clusterName}" 
+
+echo "===================================================="
 echo " Setting up project ..."
 
 gcloud config set project $projectId

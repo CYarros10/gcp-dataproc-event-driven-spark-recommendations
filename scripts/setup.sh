@@ -20,7 +20,7 @@ usage() {
 }
 export -f usage
 
-while getopts ":i:n:r:z" opt; do
+while getopts ":i:n:r:z:" opt; do
     case $opt in
         i ) projectId="$OPTARG";;
         n ) projectNumber="$OPTARG";;
@@ -32,6 +32,13 @@ while getopts ":i:n:r:z" opt; do
         ;;
     esac
 done
+
+echo "===================================================="
+echo " Inputs ..."
+echo " Project ID: ${projectId}" 
+echo " Project Number: ${projectNumber}" 
+echo " Region: ${region}" 
+echo " Zone: ${zone}" 
 
 echo "===================================================="
 echo " Setting up project ..."
