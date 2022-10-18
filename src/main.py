@@ -52,8 +52,8 @@ def load_machine_type_info(m_type_str):
     for m_type in response['items']:
       dataproc_m_types.append(m_type)
     request = service.machineTypes().list_next(
-      previourequest=request,
-      previouresponse=response
+      previous_request=request,
+      previous_response=response
     )
   return dataproc_m_types
 
@@ -237,7 +237,7 @@ def evaluate_dataproc_clusters():
     )
     upload_blob(
       BUCKET_NAME,
-      'dataproc-cluster-spark-recs/'+str(response.cluster_name),
+      'dataproc-cluster-spark-recommendations/'+str(response.cluster_name),
       str(evaluate_properties(response))
     )
 
