@@ -33,16 +33,30 @@ This repository contains infrastructure-as-code to set up an automated, event-dr
 ## guide
 
 
-To get started, update setup.sh with environment variables, then run.
+#### 1. To get started, update setup.sh with environment variables, then run.
 
 ```bash
-./scripts/setup.sh
+./scripts/setup.sh -i <project-id> -n <project-number> -r <region> -z <zone>
 ```
 
-To test with sample dataproc cluster, update testing.sh with environment variables, then run.
+#### 2. To test with sample dataproc cluster, update testing.sh with environment variables, then run.
 
 ```
-./scripts/testing.sh
+./scripts/test.sh -i <project-id> -r <region> -c <cluster-name>
+```
+
+#### 3. View results in the newly created GCS bucket:
+
+configuration library:
+
+```
+gs://<project-id>-dataproc-cluster-analysis/dataproc-cluster-configuration-library/
+```
+
+recommendations:
+
+```
+gs://<project-id>-dataproc-cluster-analysis/dataproc-cluster-spark-recommendations/
 ```
 
 ----
