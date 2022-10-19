@@ -1,4 +1,4 @@
-# gcp-dataproc-spark-property-monitoring
+# gcp-dataproc-event-driven-spark-recommendations
 
 ----
 
