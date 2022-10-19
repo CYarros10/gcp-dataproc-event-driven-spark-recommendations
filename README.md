@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # dataproc-event-driven-spark-recommendations
-=======
-# gcp-dataproc-event-driven-spark-recommendations
->>>>>>> 589daa97d6fa321c70a85b902b4af3de65f5feaa
 
 ----
 
