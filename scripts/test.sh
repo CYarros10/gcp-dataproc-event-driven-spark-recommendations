@@ -41,7 +41,7 @@ echo " Cluster Name: ${clusterName}"
 echo "===================================================="
 echo " Setting up project ..."
 
-gcloud config set project $projectId
+gcloud config set project "$projectId"
 
 gcloud services enable storage-component.googleapis.com 
 gcloud services enable compute.googleapis.com  
@@ -60,13 +60,13 @@ echo "{
 	  }
 }" > external_ip_policy.json
 
-gcloud resource-manager org-policies set-policy external_ip_policy.json --project=$projectId
+gcloud resource-manager org-policies set-policy external_ip_policy.json --project="$projectId"
 
-sleep 120
+sleep 90
 
 echo "===================================================="
 echo " Creating cluster ..."
 
-gcloud dataproc clusters create $clusterName-sample \
-    --region=$region
+gcloud dataproc clusters create "${clusterName}-sample" \
+    --region="$region"
 

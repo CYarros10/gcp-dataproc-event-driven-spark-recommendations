@@ -28,10 +28,10 @@ from google.cloud import storage
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 
-PROJECT_ID=os.environ.get('PROJECT_ID', 'Environment variable is not set.')
-REGION=os.environ.get('REGION', 'Environment variable is not set.')
-ZONE=os.environ.get('ZONE', 'Environment variable is not set.')
-BUCKET_NAME=os.environ.get('BUCKET_NAME', 'Environment variable is not set.')
+_PROJECT_ID=os.environ.get('PROJECT_ID', 'Environment variable is not set.')
+_REGION=os.environ.get('REGION', 'Environment variable is not set.')
+_ZONE=os.environ.get('ZONE', 'Environment variable is not set.')
+_BUCKET_NAME=os.environ.get('BUCKET_NAME', 'Environment variable is not set.')
 
 def load_machine_type_info(m_type_str):
   """
@@ -41,8 +41,8 @@ def load_machine_type_info(m_type_str):
   service = discovery.build('compute', 'v1', credentials=credentials)
   filter_string = f'name:{m_type_str}'
   request = service.machineTypes().list(
-      project=PROJECT_ID,
-      zone=ZONE,
+      project=_PROJECT_ID,
+      zone=_ZONE,
       filter=filter_string
   )
 
@@ -219,24 +219,24 @@ def evaluate_dataproc_clusters():
   """
   # Create a client
   client = dataproc_v1.ClusterControllerClient(
-    client_options={'api_endpoint': f'{REGION}-dataproc.googleapis.com:443'}
+    client_options={'api_endpoint': f'{_REGION}-dataproc.googleapis.com:443'}
   )
 
   # Initialize request argument(s)
   request = client.list_clusters(
-    project_id=PROJECT_ID,
-    region=REGION,
+    project_id=_PROJECT_ID,
+    region=_REGION,
   )
 
   # Handle the response
   for response in request:
     upload_blob(
-      BUCKET_NAME,
+      _BUCKET_NAME,
       'dataproc-cluster-configuration-library/'+str(response.cluster_name),
       str(response)
     )
     upload_blob(
-      BUCKET_NAME,
+      _BUCKET_NAME,
       'dataproc-cluster-spark-recommendations/'+str(response.cluster_name),
       str(evaluate_properties(response))
     )

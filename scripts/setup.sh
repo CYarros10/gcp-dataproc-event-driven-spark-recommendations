@@ -43,7 +43,7 @@ echo " Zone: ${zone}"
 echo "===================================================="
 echo " Setting up project ..."
 
-gcloud config set project $projectId
+gcloud config set project "$projectId"
 
 gcloud services enable storage-component.googleapis.com 
 gcloud services enable compute.googleapis.com  
@@ -62,7 +62,7 @@ gcloud services enable eventarc.googleapis.com
 echo "===================================================="
 echo " Updating terraform variables ..."
 
-cd terraform
+cd terraform || exit
 
 # edit the variables.tf
 
